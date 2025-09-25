@@ -277,7 +277,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **OK2HSS**
 - Version: 2.0
-- Contact: [Your contact information]
 
 ## Changelog
 
@@ -317,7 +316,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Minimum 50MB free disk space for logs
 - Python 3.7+ runtime environment
 
-## API Reference
 
 ### Core Classes
 
