@@ -1,0 +1,24 @@
+# WiFi Scanner Suite - Python Dependencies
+
+# Optional: Enhanced terminal interface with colors and formatting
+# Provides rich text rendering, progress bars, and improved user experience
+# If not installed, the application falls back to basic terminal output
+rich>=10.0.0
+
+# Note: Core functionality works without any additional Python packages
+# The application uses only Python standard library modules:
+# - argparse (command line parsing)
+# - json (data serialization)
+# - csv (data export)
+# - subprocess (system command execution)
+# - datetime (timestamp handling)
+# - pathlib (file system operations)
+# - dataclasses (data structures)
+# - time (timing and delays)
+# - typing (type hints)
+
+# System dependencies (not Python packages, install via system package manager):
+# - NetworkManager (nmcli command)
+# - wireless-tools (iwconfig, iwlist commands)
+# - Linux kernel with wireless support
+# - Python 3.7 or higher
