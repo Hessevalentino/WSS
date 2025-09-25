@@ -27,7 +27,7 @@ A comprehensive command-line WiFi network scanner and connection utility for Lin
 
 ### Clone Repository
 ```bash
-git clone https://github.com/yourusername/wifi-scanner-suite.git
+https://github.com/Hessevalentino/WSS.git
 cd wifi-scanner-suite
 ```
 
