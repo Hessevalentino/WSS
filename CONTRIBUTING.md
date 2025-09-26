@@ -109,8 +109,10 @@ def function_name(param: type) -> return_type:
 Before submitting changes, test:
 
 - **Basic functionality** with `--scan`, `--auto`, `--continuous`
-- **Interactive menu** navigation
-- **Export functionality** (JSON and CSV)
+- **Interactive menu** navigation including device scanning
+- **Device discovery** functionality (menu option 3)
+- **Export functionality** (JSON with device information)
+- **Log viewer** with device information display
 - **Error handling** with invalid inputs
 - **Different network conditions**
 
@@ -119,19 +121,22 @@ Before submitting changes, test:
 Include tests for:
 
 - **Network discovery** accuracy
+- **Device discovery** functionality and MAC address parsing
 - **Connection attempt** handling
-- **Data export** format validation
+- **Data export** format validation (including device information)
 - **Configuration** loading and validation
 - **Error conditions** and recovery
+- **Device deduplication** logic
 
 ## Architecture Overview
 
 ### Core Components
 
 - **WiFiNetwork**: Data class for network information
+- **NetworkDevice**: Data class for discovered network devices
 - **ConnectionAttempt**: Data class for connection results
 - **WiFiConfig**: Configuration management
-- **WiFiScanner**: Core scanning and connection logic
+- **WiFiScanner**: Core scanning and connection logic with device discovery
 - **WiFiScannerApp**: User interface and menu system
 
 ### Key Design Principles
@@ -141,6 +146,30 @@ Include tests for:
 - **Configuration-driven** behavior
 - **Cross-platform** compatibility within Linux ecosystem
 - **Minimal dependencies** for broad compatibility
+
+### Device Discovery Architecture
+
+The device discovery system uses a multi-layered approach:
+
+1. **ARP Table Scanning** (`_scan_arp_table`)
+   - Fast discovery of recently communicated devices
+   - Provides hostname information when available
+   - Uses system `arp -a` command
+
+2. **Active Network Scanning** (`_scan_with_arp_scan`)
+   - Comprehensive network mapping using `arp-scan`
+   - Vendor identification through MAC address lookup
+   - Requires optional `arp-scan` package
+
+3. **Nmap Fallback** (`_scan_with_nmap`)
+   - Backup method when `arp-scan` unavailable
+   - Uses `nmap -sn` for ping sweep discovery
+   - Extracts MAC addresses and vendor information
+
+4. **Device Deduplication** (`_deduplicate_devices`)
+   - Removes duplicate devices based on MAC address
+   - Preserves most complete device information
+   - Maintains data integrity across scan methods
 
 ## Feature Development
 

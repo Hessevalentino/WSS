@@ -5,6 +5,54 @@ All notable changes to WiFi Scanner Suite will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2025-09-26
+
+### Enhanced
+- **BSSID Display**: Added BSSID (MAC address) column to continuous scanning tables
+- **Log Viewer Enhancement**: BSSID now displayed in network tables when browsing historical logs
+- **Continuous Scanning**: Both Rich and Simple terminal modes now show BSSID information
+- **Table Layout**: Improved column ordering for better readability (SSID | Security | Signal | Band | BSSID | Quality/Channel | RSSI)
+- **Consistent Formatting**: Unified BSSID display format across all interfaces
+
+### Fixed
+- **Column Alignment**: Adjusted table widths to accommodate BSSID column
+- **Fallback Display**: Shows "N/A" when BSSID information is unavailable
+- **Terminal Compatibility**: BSSID display works in both Rich and simple terminal modes
+
+## [2.1.0] - 2025-09-26
+
+### Added
+- **Network Device Discovery**: Comprehensive MAC address scanning of connected devices
+- **Multi-method Device Scanning**: ARP table, arp-scan, and nmap fallback methods
+- **Device Identification**: Hostname resolution and vendor identification
+- **MAC Address Validation**: Robust parsing and validation of MAC addresses
+- **Device Deduplication**: Intelligent removal of duplicate devices by MAC address
+- **Enhanced JSON Export**: Network devices included in export data structure
+- **Advanced Log Viewer**: Browse device information in historical logs
+- **Interactive Device Display**: Rich terminal tables for device information
+- **Vendor Lookup**: Hardware vendor identification from MAC addresses
+- **Device Timestamp Tracking**: Discovery time tracking for each device
+
+### Enhanced
+- **Menu System**: Added "Scan Network Devices" option (menu item 3)
+- **Log Viewer**: New option to view network devices in historical data
+- **JSON Structure**: Extended with `network_devices` array containing device information
+- **Error Handling**: Graceful fallback when scanning tools unavailable
+- **Documentation**: Updated all documentation with device discovery examples
+
+### Fixed
+- **BSSID Parsing**: Resolved issue with truncated MAC addresses in WiFi network data
+- **Channel Detection**: Fixed missing channel information in network scans
+- **JSON Export**: Eliminated escape sequences in exported data
+- **Network Deduplication**: Improved duplicate network detection using SSID+BSSID
+
+### Technical Improvements
+- **NetworkDevice Dataclass**: New data structure for device representation
+- **Robust nmcli Parsing**: Enhanced parsing with regex validation
+- **Frequency-to-Channel Mapping**: Automatic channel calculation from frequency
+- **MAC Address Normalization**: Consistent uppercase formatting
+- **Multi-tool Integration**: Support for arp-scan, nmap, and ARP table scanning
+
 ## [2.0.0] - 2024-01-15
 
 ### Added

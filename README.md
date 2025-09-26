@@ -5,12 +5,15 @@ A comprehensive command-line WiFi network scanner and connection utility for Lin
 ## Features
 
 - **Continuous WiFi Scanning**: Real-time monitoring of available wireless networks
+- **Network Device Discovery**: Comprehensive MAC address scanning of connected devices
 - **Automated Connection Testing**: Systematic testing of open networks with connectivity validation
 - **Advanced Network Analysis**: Signal strength, frequency band detection, and RSSI measurements
+- **Device Identification**: Hostname resolution and vendor identification for network devices
 - **Comprehensive Reporting**: Detailed connection reports with ping statistics and failure analysis
-- **Multiple Export Formats**: JSON and CSV export capabilities for data analysis
+- **JSON Export**: Professional data export with WiFi networks and device information
 - **Interactive Menu System**: User-friendly interface with rich terminal support
-- **Logging and Statistics**: Persistent storage of scan results and connection attempts
+- **Advanced Log Viewer**: Browse and analyze historical scan data with device information
+- **Logging and Statistics**: Persistent storage of scan results, connection attempts, and device data
 
 ## Requirements
 
@@ -18,6 +21,7 @@ A comprehensive command-line WiFi network scanner and connection utility for Lin
 - Linux operating system
 - NetworkManager (`nmcli`)
 - Wireless tools (`iwconfig`, `iwlist`)
+- Network scanning tools (`arp-scan`, `nmap`) - optional for enhanced device discovery
 - Python 3.7 or higher
 
 ### Python Dependencies
@@ -27,7 +31,7 @@ A comprehensive command-line WiFi network scanner and connection utility for Lin
 
 ### Clone Repository
 ```bash
-https://github.com/Hessevalentino/WSS.git
+git clone https://github.com/yourusername/wifi-scanner-suite.git
 cd wifi-scanner-suite
 ```
 
@@ -40,12 +44,14 @@ pip install rich
 ### System Dependencies
 ```bash
 # Ubuntu/Debian
-sudo apt-get install network-manager wireless-tools
+sudo apt-get install network-manager wireless-tools arp-scan nmap
 
 # CentOS/RHEL/Fedora
-sudo yum install NetworkManager wireless-tools
+sudo yum install NetworkManager wireless-tools arp-scan nmap
 # or
-sudo dnf install NetworkManager wireless-tools
+sudo dnf install NetworkManager wireless-tools arp-scan nmap
+
+# Note: arp-scan and nmap are optional but recommended for enhanced device discovery
 ```
 
 ## Usage
@@ -77,10 +83,11 @@ python3 wifi_scanner_suite.py --help
 
 1. **Continuous Scanning**: Real-time WiFi network monitoring with live updates
 2. **Auto-connect**: Automated testing of all open networks with comprehensive reporting
-3. **Show Statistics**: Display scan results and connection attempt statistics
-4. **Export Data**: Save results in JSON or CSV format
-5. **Settings**: View current configuration parameters
-6. **Show Logs**: Browse historical scan data
+3. **Scan Network Devices**: Discover and identify devices connected to the current network
+4. **Show Statistics**: Display scan results and connection attempt statistics
+5. **Export to JSON**: Save results in JSON format with network and device information
+6. **Settings**: View current configuration parameters
+7. **Log Viewer**: Browse historical scan data including device information
 
 ## Configuration
 
@@ -117,13 +124,26 @@ WSS uses a configuration file (`wifi_config.json`) with the following default se
 ### Network Scan Results
 ```
 WiFi Scan #1 - 14:30:25
-┌─────────────────┬──────────────┬────────┬─────────┬─────────────┐
-│ SSID            │ Security     │ Signal │ Band    │ Quality     │
-├─────────────────┼──────────────┼────────┼─────────┼─────────────┤
-│ HomeNetwork     │ WPA2         │ 85%    │ 2.4GHz  │ Excellent   │
-│ FreeWiFi        │ OPEN         │ 72%    │ 5GHz    │ Good        │
-│ CoffeeShop      │ OPEN         │ 45%    │ 2.4GHz  │ Weak        │
-└─────────────────┴──────────────┴────────┴─────────┴─────────────┘
+┌─────────────────┬──────────────┬────────┬─────────┬───────────────────┬─────────────┐
+│ SSID            │ Security     │ Signal │ Band    │ BSSID             │ Quality     │
+├─────────────────┼──────────────┼────────┼─────────┼───────────────────┼─────────────┤
+│ HomeNetwork     │ WPA2         │ 85%    │ 2.4GHz  │ AA:BB:CC:DD:EE:FF │ Excellent   │
+│ FreeWiFi        │ OPEN         │ 72%    │ 5GHz    │ BB:CC:DD:EE:FF:AA │ Good        │
+│ CoffeeShop      │ OPEN         │ 45%    │ 2.4GHz  │ CC:DD:EE:FF:AA:BB │ Weak        │
+└─────────────────┴──────────────┴────────┴─────────┴───────────────────┴─────────────┘
+```
+
+### Network Device Discovery
+```
+Found 4 network devices
+┌─────────────────┬───────────────────┬──────────────────┬─────────────────┐
+│ IP Address      │ MAC Address       │ Hostname         │ Vendor          │
+├─────────────────┼───────────────────┼──────────────────┼─────────────────┤
+│ 192.168.1.1     │ AA:BB:CC:DD:EE:FF │ router.local     │ Cisco Systems   │
+│ 192.168.1.100   │ BB:CC:DD:EE:FF:AA │ laptop           │ Dell Inc.       │
+│ 192.168.1.50    │ CC:DD:EE:FF:AA:BB │ -                │ Apple Inc.      │
+│ 192.168.1.25    │ DD:EE:FF:AA:BB:CC │ smartphone       │ Samsung         │
+└─────────────────┴───────────────────┴──────────────────┴─────────────────┘
 ```
 
 ### Connection Report
@@ -163,8 +183,23 @@ Networks are classified by signal strength:
 - **Weak**: 40-59% signal strength
 - **Very Weak**: Below 40% signal strength
 
+### BSSID Display
+WSS displays BSSID (Basic Service Set Identifier) information for comprehensive network identification:
+- **Continuous Scanning**: BSSID shown in real-time network tables
+- **Log Viewer**: Historical BSSID data displayed in network browsing
+- **Access Point Identification**: Unique MAC addresses for each WiFi access point
+- **Network Differentiation**: Distinguish between multiple APs with same SSID
+
 ### RSSI Measurements
 When available, WSS displays Received Signal Strength Indicator (RSSI) values in dBm alongside percentage-based signal strength for more precise signal analysis.
+
+### Network Device Discovery
+WSS provides comprehensive device discovery capabilities:
+- **ARP Table Scanning**: Fast discovery of known devices
+- **Active Network Scanning**: Using arp-scan for complete network mapping
+- **Vendor Identification**: MAC address vendor lookup for device identification
+- **Hostname Resolution**: Device name discovery when available
+- **Multiple Scan Methods**: Fallback to nmap when specialized tools unavailable
 
 ### Ping Statistics
 Connection testing includes comprehensive ping analysis:
@@ -202,6 +237,22 @@ Connection testing includes comprehensive ping analysis:
       "signal": 72,
       "ping_success": true,
       "ping_stats": "min/avg/max = 12.3/15.6/18.9 ms"
+    }
+  ],
+  "network_devices": [
+    {
+      "ip_address": "192.168.1.1",
+      "mac_address": "AA:BB:CC:DD:EE:FF",
+      "hostname": "router.local",
+      "vendor": "Cisco Systems",
+      "timestamp": "2024-01-15T14:30:25.123456"
+    },
+    {
+      "ip_address": "192.168.1.100",
+      "mac_address": "BB:CC:DD:EE:FF:AA",
+      "hostname": "laptop",
+      "vendor": "Dell Inc.",
+      "timestamp": "2024-01-15T14:30:25.123456"
     }
   ]
 }
@@ -277,6 +328,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **OK2HSS**
 - Version: 2.0
+- Contact: [Your contact information]
 
 ## Changelog
 
@@ -316,6 +368,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Minimum 50MB free disk space for logs
 - Python 3.7+ runtime environment
 
+## API Reference
 
 ### Core Classes
 
@@ -329,6 +382,14 @@ Represents a discovered wireless network with the following attributes:
 - `channel`: WiFi channel number
 - `bssid`: MAC address of access point
 - `rssi`: Received Signal Strength Indicator in dBm
+
+#### NetworkDevice
+Represents a discovered network device with the following attributes:
+- `ip_address`: Device IP address in the network
+- `mac_address`: Hardware MAC address (unique identifier)
+- `hostname`: Device hostname (if resolvable)
+- `vendor`: Network interface vendor (from MAC address lookup)
+- `timestamp`: ISO format discovery timestamp
 
 #### ConnectionAttempt
 Records connection attempt results:

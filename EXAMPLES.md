@@ -16,10 +16,26 @@ Test all open networks and generate a comprehensive report:
 python3 wifi_scanner_suite.py --auto
 ```
 
-### Continuous Monitoring
-Monitor WiFi networks in real-time with live updates:
+### Continuous Monitoring with BSSID Display
+Monitor WiFi networks in real-time with live updates including BSSID information:
 ```bash
 python3 wifi_scanner_suite.py --continuous
+```
+
+**Sample output with BSSID:**
+```
+WiFi Scan #1 - 17:30:45
+┌─────────────────┬──────────┬────────┬─────────┬───────────────────┬─────────────┐
+│ SSID            │ Security │ Signal │ Band    │ BSSID             │ Quality     │
+├─────────────────┼──────────┼────────┼─────────┼───────────────────┼─────────────┤
+│ HomeNetwork     │ 🔒 WPA2  │ 85%    │ 2.4GHz  │ AA:BB:CC:DD:EE:FF │ Excellent   │
+│ FreeWiFi        │ 🔓 OPEN  │ 72%    │ 5GHz    │ BB:CC:DD:EE:FF:AA │ Good        │
+│ CoffeeShop      │ 🔓 OPEN  │ 45%    │ 2.4GHz  │ CC:DD:EE:FF:AA:BB │ Weak        │
+└─────────────────┴──────────┴────────┴─────────┴───────────────────┴─────────────┘
+
+🎉 OPEN NETWORKS FOUND:
+  → FreeWiFi (72% -58dBm 5GHz) | BSSID: BB:CC:DD:EE:FF:AA [OPEN]
+  → CoffeeShop (45% -76dBm 2.4GHz) | BSSID: CC:DD:EE:FF:AA:BB [OPEN]
 ```
 
 ## Interactive Menu Examples
@@ -32,10 +48,11 @@ python3 wifi_scanner_suite.py
 The interactive menu provides these options:
 1. **Continuous scanning** - Real-time network monitoring
 2. **Auto-connect** - Test all open networks systematically
-3. **Show statistics** - View scan results and connection data
-4. **Export data** - Save results in JSON or CSV format
-5. **Settings** - Display current configuration
-6. **Show logs** - Browse historical data
+3. **Scan network devices** - Discover devices connected to current network
+4. **Show statistics** - View scan results and connection data
+5. **Export to JSON** - Save results with network and device information
+6. **Settings** - Display current configuration
+7. **Log viewer** - Browse historical data including device information
 
 ## Configuration Examples
 
@@ -66,6 +83,44 @@ For systems with multiple wireless interfaces:
   "test_host": "1.1.1.1"
 }
 ```
+
+## Network Device Discovery Examples
+
+### Basic Device Scanning
+Use menu option 3 to discover devices on the current network:
+```
+🖥️  Scanning network devices...
+
+✅ Found 6 network devices
+┌─────────────────┬───────────────────┬──────────────────┬─────────────────────┐
+│ IP Address      │ MAC Address       │ Hostname         │ Vendor              │
+├─────────────────┼───────────────────┼──────────────────┼─────────────────────┤
+│ 192.168.1.1     │ AA:BB:CC:DD:EE:FF │ router.local     │ Cisco Systems       │
+│ 192.168.1.100   │ BB:CC:DD:EE:FF:AA │ laptop           │ Dell Inc.           │
+│ 192.168.1.50    │ CC:DD:EE:FF:AA:BB │ -                │ Apple Inc.          │
+│ 192.168.1.25    │ DD:EE:FF:AA:BB:CC │ smartphone       │ Samsung Electronics │
+│ 192.168.1.75    │ EE:FF:AA:BB:CC:DD │ tablet           │ Apple Inc.          │
+│ 192.168.1.200   │ FF:AA:BB:CC:DD:EE │ printer          │ HP Inc.             │
+└─────────────────┴───────────────────┴──────────────────┴─────────────────────┘
+```
+
+### Device Discovery Methods
+WSS uses multiple scanning methods for comprehensive device discovery:
+
+1. **ARP Table Scanning** (fastest)
+   - Scans existing ARP entries
+   - Discovers recently communicated devices
+   - Provides hostname information
+
+2. **Active Network Scanning** (most comprehensive)
+   - Uses `arp-scan` for complete network mapping
+   - Discovers all active devices on subnet
+   - Provides vendor identification
+
+3. **Nmap Fallback** (when arp-scan unavailable)
+   - Uses `nmap -sn` for ping sweep
+   - Discovers responsive devices
+   - Extracts MAC addresses and vendors
 
 ## Output Examples
 
@@ -119,15 +174,14 @@ Statistics:
 
 ## Export Examples
 
-### JSON Export
+### JSON Export with Device Information
 ```bash
-# Export current session data
+# Export current session data including network devices
 python3 wifi_scanner_suite.py
-# Select option 4 (Export data)
-# Choose JSON format
+# Select option 5 (Export to JSON)
 ```
 
-Sample JSON output:
+Sample JSON output with network devices:
 ```json
 {
   "timestamp": "2024-01-15T15:42:18.123456",
@@ -155,25 +209,97 @@ Sample JSON output:
       "ping_success": true,
       "ping_stats": "min/avg/max = 15.2/18.7/22.1 ms"
     }
+  ],
+  "network_devices": [
+    {
+      "ip_address": "192.168.1.1",
+      "mac_address": "AA:BB:CC:DD:EE:FF",
+      "hostname": "router.local",
+      "vendor": "Cisco Systems",
+      "timestamp": "2024-01-15T15:42:18.123456"
+    },
+    {
+      "ip_address": "192.168.1.100",
+      "mac_address": "BB:CC:DD:EE:FF:AA",
+      "hostname": "laptop",
+      "vendor": "Dell Inc.",
+      "timestamp": "2024-01-15T15:42:18.123456"
+    },
+    {
+      "ip_address": "192.168.1.50",
+      "mac_address": "CC:DD:EE:FF:AA:BB",
+      "hostname": null,
+      "vendor": "Apple Inc.",
+      "timestamp": "2024-01-15T15:42:18.123456"
+    }
   ]
 }
 ```
 
-### CSV Export
-CSV files are generated separately for networks and connection attempts:
+## Log Viewer Examples
 
-**wifi_networks_20240115_154218.csv**
-```csv
-ssid,security,signal,frequency,band,channel,bssid,rssi,timestamp
-CafeWiFi,,76,2437,2.4GHz,6,aa:bb:cc:dd:ee:ff,-48,2024-01-15T15:42:18.123456
-PublicHotspot,,41,2462,2.4GHz,11,bb:cc:dd:ee:ff:aa,-68,2024-01-15T15:42:18.123456
+### Browsing Historical Data
+Use menu option 7 to browse historical scan data:
+```
+📋 LOG VIEWER
+============================================================
+
+Available log files:
+┌───┬─────────────────────────────┬─────────┬──────────────────┬──────────┬─────────────┐
+│ # │ File Name                   │ Size    │ Date             │ Networks │ Attempts    │
+├───┼─────────────────────────────┼─────────┼──────────────────┼──────────┼─────────────┤
+│ 1 │ wifi_scan_20240115_154218   │ 2.3KB   │ 15.01.2024 15:42 │ 5        │ 3           │
+│ 2 │ wifi_scan_20240115_143022   │ 1.8KB   │ 15.01.2024 14:30 │ 3        │ 2           │
+│ 3 │ wifi_scan_20240114_162545   │ 3.1KB   │ 14.01.2024 16:25 │ 8        │ 5           │
+└───┴─────────────────────────────┴─────────┴──────────────────┴──────────┴─────────────┘
 ```
 
-**wifi_attempts_20240115_154218.csv**
-```csv
-ssid,timestamp,success,ip_address,error_message,band,signal,ping_success,ping_stats
-CafeWiFi,2024-01-15T15:42:25.123456,True,192.168.1.105,,2.4GHz,76,True,min/avg/max = 15.2/18.7/22.1 ms
-PublicHotspot,2024-01-15T15:42:35.123456,False,,Failed to get IP address,2.4GHz,41,False,
+### Viewing Networks with BSSID in Logs
+After selecting a log file, option 1 shows all networks including BSSID information:
+```
+📄 LOG: wifi_scan_20240115_154218.json
+Timestamp: 2024-01-15T15:42:18.123456
+Networks found: 5
+Connection attempts: 3
+Network devices: 6
+
+Options:
+1. View all networks      ← Shows BSSID information
+2. View open networks only
+3. View connection attempts
+4. View network devices
+5. View statistics
+6. Back to log list
+```
+
+**Network display with BSSID:**
+```
+All Networks (5)
+┌─────────────────┬──────────┬────────┬─────────┬───────────────────┬─────────┬──────────┐
+│ SSID            │ Security │ Signal │ Band    │ BSSID             │ Channel │ RSSI     │
+├─────────────────┼──────────┼────────┼─────────┼───────────────────┼─────────┼──────────┤
+│ HomeNetwork     │ WPA2     │ 85%    │ 2.4GHz  │ AA:BB:CC:DD:EE:FF │ 6       │ -45dBm   │
+│ FreeWiFi        │ OPEN     │ 72%    │ 5GHz    │ BB:CC:DD:EE:FF:AA │ 36      │ -58dBm   │
+│ CoffeeShop      │ OPEN     │ 45%    │ 2.4GHz  │ CC:DD:EE:FF:AA:BB │ 11      │ -76dBm   │
+└─────────────────┴──────────┴────────┴─────────┴───────────────────┴─────────┴──────────┘
+```
+
+### Viewing Device Information in Logs
+Option 4 shows discovered network devices:
+
+### Device Information Display
+```
+🖥️  Network Devices (6)
+┌─────────────────┬───────────────────┬──────────────────┬─────────────────────┬───────────┐
+│ IP Address      │ MAC Address       │ Hostname         │ Vendor              │ Timestamp │
+├─────────────────┼───────────────────┼──────────────────┼─────────────────────┼───────────┤
+│ 192.168.1.1     │ AA:BB:CC:DD:EE:FF │ router.local     │ Cisco Systems       │ 15:42:18  │
+│ 192.168.1.100   │ BB:CC:DD:EE:FF:AA │ laptop           │ Dell Inc.           │ 15:42:18  │
+│ 192.168.1.50    │ CC:DD:EE:FF:AA:BB │ -                │ Apple Inc.          │ 15:42:18  │
+│ 192.168.1.25    │ DD:EE:FF:AA:BB:CC │ smartphone       │ Samsung Electronics │ 15:42:18  │
+│ 192.168.1.75    │ EE:FF:AA:BB:CC:DD │ tablet           │ Apple Inc.          │ 15:42:18  │
+│ 192.168.1.200   │ FF:AA:BB:CC:DD:EE │ printer          │ HP Inc.             │ 15:42:18  │
+└─────────────────┴───────────────────┴──────────────────┴─────────────────────┴───────────┘
 ```
 
 ## Troubleshooting Examples
