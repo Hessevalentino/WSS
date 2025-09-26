@@ -2,6 +2,21 @@
 
 This document provides practical examples of using WiFi Scanner Suite (WSS) for various network analysis scenarios.
 
+## Installation
+
+### Quick Start
+```bash
+# Clone the repository
+git clone https://github.com/Hessevalentino/WSS.git
+cd WSS
+
+# Install optional dependencies for enhanced interface
+pip install rich
+
+# Run the program
+python3 wifi_scanner_suite.py
+```
+
 ## Basic Usage Examples
 
 ### Quick Network Scan

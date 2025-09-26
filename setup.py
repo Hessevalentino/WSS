@@ -21,13 +21,13 @@ def read_requirements():
 
 setup(
     name="wifi-scanner-suite",
-    version="2.1.1",
+    version="2.1.2",
     author="OK2HSS",
     author_email="your.email@example.com",  # Replace with actual email
     description="A comprehensive command-line WiFi network scanner with BSSID display, device discovery, and connection utility for Linux systems",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/wifi-scanner-suite",  # Replace with actual repository URL
+    url="https://github.com/Hessevalentino/WSS",
     py_modules=["wifi_scanner_suite"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

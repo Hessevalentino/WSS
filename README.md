@@ -31,8 +31,8 @@ A comprehensive command-line WiFi network scanner and connection utility for Lin
 
 ### Clone Repository
 ```bash
-git clone https://github.com/yourusername/wifi-scanner-suite.git
-cd wifi-scanner-suite
+git clone https://github.com/Hessevalentino/WSS.git
+cd WSS
 ```
 
 ### Install Python Dependencies
@@ -422,10 +422,65 @@ All configuration parameters can be modified in `wifi_config.json`:
 
 This tool is intended for educational and legitimate network testing purposes only. Users are responsible for ensuring compliance with local laws and regulations regarding network scanning and connection testing. The authors assume no liability for misuse of this software.
 
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+- ✅ **Commercial use** - Use in commercial projects
+- ✅ **Modification** - Modify and adapt the code
+- ✅ **Distribution** - Share and distribute freely
+- ✅ **Private use** - Use for personal projects
+- ❗ **Liability** - No warranty provided
+- ❗ **Attribution** - Must include original license
+
+## Open Source
+
+WiFi Scanner Suite is **100% open source** and welcomes contributions from the community!
+
+### 🌟 **Why Open Source?**
+- **Transparency** - Full code visibility for security auditing
+- **Community-driven** - Improvements from developers worldwide
+- **Educational** - Learn from real-world networking code
+- **Customizable** - Adapt to your specific needs
+- **Free forever** - No licensing fees or restrictions
+
+### 🤝 **Contributing**
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines:
+- 🐛 **Bug reports** - Help us identify and fix issues
+- 💡 **Feature requests** - Suggest new functionality
+- 🔧 **Code contributions** - Submit pull requests
+- 📚 **Documentation** - Improve guides and examples
+- 🧪 **Testing** - Help test on different systems
+
+### 📊 **Project Stats**
+- **Language:** Python 3.7+
+- **Dependencies:** Minimal (only `rich` optional)
+- **Platform:** Linux (NetworkManager required)
+- **License:** MIT (Commercial-friendly)
+- **Maintenance:** Actively maintained
+
+### 🔗 **Links**
+- **Repository:** [https://github.com/Hessevalentino/WSS](https://github.com/Hessevalentino/WSS)
+- **Issues:** [https://github.com/Hessevalentino/WSS/issues](https://github.com/Hessevalentino/WSS/issues)
+- **Releases:** [https://github.com/Hessevalentino/WSS/releases](https://github.com/Hessevalentino/WSS/releases)
+- **License:** [https://github.com/Hessevalentino/WSS/blob/main/LICENSE](https://github.com/Hessevalentino/WSS/blob/main/LICENSE)
+
 ## Support
 
 For bug reports, feature requests, or general support:
-1. Check existing issues on GitHub
-2. Create detailed issue reports with system information
-3. Include relevant log files and error messages
-4. Specify your Linux distribution and version
+1. **Check existing issues** on [GitHub Issues](https://github.com/Hessevalentino/WSS/issues)
+2. **Create detailed issue reports** with system information
+3. **Include relevant log files** and error messages
+4. **Specify your Linux distribution** and version
+5. **Star the repository** ⭐ if you find it useful!
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [OK2HSS](https://github.com/Hessevalentino)**
+
+*If this project helped you, please consider giving it a ⭐ on GitHub!*
+
+</div>

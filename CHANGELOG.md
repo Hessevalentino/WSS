@@ -5,6 +5,20 @@ All notable changes to WiFi Scanner Suite will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.2] - 2025-09-26
+
+### Fixed
+- **GitHub URLs**: Updated all repository URLs to correct GitHub address
+- **Clone Instructions**: Fixed git clone command with proper repository URL
+- **Setup Configuration**: Updated setup.py with correct GitHub repository URL
+
+### Enhanced
+- **License Information**: Added comprehensive MIT License section with usage rights
+- **Open Source Section**: Added detailed open source information and contribution guidelines
+- **Repository Links**: Added direct links to Issues, Releases, and License pages
+- **Installation Guide**: Enhanced EXAMPLES.md with quick start installation instructions
+- **Community Support**: Improved support section with GitHub issue links
+
 ## [2.1.1] - 2025-09-26
 
 ### Enhanced

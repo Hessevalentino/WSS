@@ -2,7 +2,7 @@
 """
 WSS - WiFi Scanner Suite
 Author: OK2HSS
-Version: 2.1.1
+Version: 2.1.2
 
 Features:
 - Continuous WiFi scanning with BSSID display
